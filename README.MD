@@ -12,11 +12,11 @@
 - commandTable
 
 ### defaults
--commands
+- commands
     - './commands'
--events
+- events
     - './events'
--commandTable
+- commandTable
     - true
 
 ### types
