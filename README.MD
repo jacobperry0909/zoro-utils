@@ -25,18 +25,25 @@ takes 2 paramaters. A instance of a discord.js Client, and options
 ### options
 
 commands - relative path to commands folder - String
+
 events - relative path to events folder - String
+
 commandTable - whether or not you want a table to print with commands - Boolean
 
 ## commands
 
 all commands should export an object
+
 the object must have a name property, and an execute function to load
 
 paramaters use object destructuring, available paramaters incude:
+
 message - message object
+
 args - args array
+
 handler - handler instance
+
 client - client instance
 
 ### folder structure
@@ -50,11 +57,17 @@ and so would commands/ping.js
 
 ### properties
 name - name of command - String
+
 aliases - array of names the command can be run from - Array
+
 reqArgs - args array length requried - Number
+
 usage - command usage - String
+
 nsfw - if command should only work in nsfw channels - Boolean
+
 ownerOnly - if command should only let owners use command - Boolean
+
 
 you can add some if you would like, for a help command you may want a description as well.
 
@@ -81,6 +94,7 @@ module.exports = {
 all events export a function.
 
 name of file is the name of the function
+
 all default events can be over rided by making an event with the same name as the default event
 
 paramaters include (client, handler, whatever, params, required, for, event)
