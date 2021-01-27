@@ -7,7 +7,7 @@
 
 main file
 ```js
-const zoroUtils = require('../src/index');
+const zoroUtils = require('zoro-utils');
 const discordJS = require('discord.js');
 const client = new discordJS.Client();
 
@@ -122,7 +122,7 @@ for example
 module.exports = {
     name: 'formatNumber',
     execute({ message, args, handler}) {
-        const num = args[0];
+        const num = parseInt(args[0]);
         const formattedNum = handler.utils.formatNumber(num);
 
         message.channel.send(formattedNum);
