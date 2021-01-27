@@ -85,3 +85,23 @@
             console.log(`Logged in as ${client.user.tag}`)
         }
 
+## utils
+
+- comparePerms (member, target)
+    - returns if the target has the highest ranking role, returns Boolean
+
+- formatNumber (number)
+    - returns number formatted properly with commas
+
+### examples
+
+- comparePerms
+
+        const target = message.mentions.members.first();
+        const member = message.member;
+        console.log(handler.utils.comparePerms(member, target));
+
+- formatNumber
+
+        const num = 1000;
+        console.log(handler.utils.formatNumber(num)) // 1,000
