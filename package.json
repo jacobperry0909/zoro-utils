@@ -1,13 +1,31 @@
 {
   "name": "zoro-utils",
   "version": "1.1.0",
-  "description": "utilities for discord.js",
+  "description": "discord.js utilities, command handler, event handler",
   "main": "src/index.js",
-  "author": "zoro development",
-  "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
     "discord.js": "^12.5.1",
     "glob": "^7.1.6"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobperry0909/zoro-utils.git"
+  },
+  "keywords": [
+    "discord.js",
+    "utilities",
+    "command-handler",
+    "event-handler"
+  ],
+  "author": "zoro-development",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacobperry0909/zoro-utils/issues"
+  },
+  "homepage": "https://github.com/jacobperry0909/zoro-utils#readme"
 }

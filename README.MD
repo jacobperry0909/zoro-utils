@@ -1,102 +1,144 @@
 # zoro-utils
 > npm install zoro-utils
 
-## Handler
+## handler
 
-### optionals
-- commands
-- events
-- commandTable
+### example
 
-### defaults
-- commands
-    - './commands'
-- events
-    - './events'
-- commandTable
-    - true
+main file
+```js
+const zoroUtils = require('../src/index');
+const discordJS = require('discord.js');
+const client = new discordJS.Client();
 
-### types
-- commands
-    - relative path
-- events
-    - relative path
-- commandTable
-    - Boolean
+new zoroUtils.handler(client, {
+    commands: './commands',
+    events: './events',
+    commandTable: false
+})
 
-### description
-- commands
-    - relative path to commands folder
-- events
-    - relative path to events folder
-- commandTable
-    - whether or not i should log loaded commands in a table. Recommened for use with a termial with emoji support
+client.login('super_secret_token');
+```
 
-### handler methods
-- setPrefix (prefix)
-    - set the prefix for the bot
-    - default: !
+takes 2 paramaters. A instance of a discord.js Client, and options
 
-- setOwners (ownersArray)
-    - set all bot owners
-    - default: []
+### options
 
-### examples
+commands - relative path to commands folder - String
+events - relative path to events folder - String
+commandTable - whether or not you want a table to print with commands - Boolean
 
-- index.js
+## commands
 
-        const zoroUtils = require('zoro-utils');
-        const discordJS = require('discord.js');
-        const client = new discordJS.Client();
+all commands should export an object
+the object must have a name property, and an execute function to load
 
-        new zoroUtils.handler(client, {
-        commands: './commands',
-        events: './events',
-        token: 'super_secret_token',
-        commandTable: false
-        })
-        .setPrefix(';')
-        .setOwners(['owner', 'ids'])
+paramaters use object destructuring, available paramaters incude:
+message - message object
+args - args array
+handler - handler instance
+client - client instance
 
-        client.login('super_secret_token')
+### folder structure
+commands can be in as many subfolders as you would like, or not in a subfolder at all
 
-- commands/ping.js
+for example
 
-        module.exports = {
-            name: 'ping',
-            aliases: ['p', 'pi'],
-            reqArgs: 0,
-            usage: 'none',
-            nsfw: false,
-            ownerOnly: false,
-            execute({ message, args, handler, client }) {
-                message.channel.send('pong');
-            }
-        }
+commands/general/dir/dir2/dir3/ping.js would still work
 
-- events/ready.js
+and so would commands/ping.js
 
-        module.exports = (client, handler) => {
-            console.log(`Logged in as ${client.user.tag}`)
-        }
+### properties
+name - name of command - String
+aliases - array of names the command can be run from - Array
+reqArgs - args array length requried - Number
+usage - command usage - String
+nsfw - if command should only work in nsfw channels - Boolean
+ownerOnly - if command should only let owners use command - Boolean
+
+you can add some if you would like, for a help command you may want a description as well.
+
+### example
+
+commands/pings.js
+
+```js
+module.exports = {
+    name: 'ping',
+    aliases: ['p'],
+    reqArgs: 0,
+    usage: 'example',
+    nsfw: false,
+    ownerOnly: false,
+    execute({ message, args, handler, client }) {
+        message.channel.send('pong');
+    }
+}
+```
+
+## events
+
+all events export a function.
+
+name of file is the name of the function
+all default events can be over rided by making an event with the same name as the default event
+
+paramaters include (client, handler, whatever, params, required, for, event)
+
+### folder structure
+
+events can be in as many subfolders as you would like, or not in a subfolder at all
+
+for example
+
+events/message/dir/dir2/dir3/message.js would still work
+
+and so would events/message.js
+
+### example
+
+events/ready.js
+
+```js
+module.exports = (client, handler) => {
+    console.log(`Logged in as ${client.user.tag}`)
+}
+```
+
+events/message.js
+
+```js
+module.exports = (client, handler, message) => {
+    console.log('I seen that');
+} 
+```
 
 ## utils
 
-- comparePerms (member, target)
-    - returns if the target has the highest ranking role, returns Boolean
+to use utils inside of commands use handler.utils.function
 
-- formatNumber (number)
-    - returns number formatted properly with commas
+for example
+```js
+module.exports = {
+    name: 'formatNumber',
+    execute({ message, args, handler}) {
+        const num = args[0];
+        const formattedNum = handler.utils.formatNumber(num);
 
-### examples
+        message.channel.send(formattedNum);
+    }
+}
+```
 
-- comparePerms
+formatNumber(Number)
+if a number is not passed in returns NaN
+if number is passed in, returns number with commas in correct place
 
-        const target = message.mentions.members.first();
-        const member = message.member;
-        console.log(handler.utils.comparePerms(member, target));
+___
 
-- formatNumber
+comparePerms(member, target)
 
-        const num = 1000;
-        console.log(handler.utils.formatNumber(num)) // 1,000
+member and target, both need to be 2 differnt member objects
+
+returns if the target has higher roles in the hierarchy or not
+
