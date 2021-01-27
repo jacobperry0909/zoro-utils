@@ -16,6 +16,8 @@ new zoroUtils.handler(client, {
     events: './events',
     commandTable: false
 })
+.setPrefix(";")
+.setOwners([])
 
 client.login('super_secret_token');
 ```
@@ -29,6 +31,20 @@ commands - relative path to commands folder - String
 events - relative path to events folder - String
 
 commandTable - whether or not you want a table to print with commands - Boolean
+
+### methods
+setPrefix(prefixString)
+
+sets the bot prefix 
+
+default: !
+
+setOwners(ownerArray)
+
+sets the bots owners
+
+default: []
+
 
 ## commands
 

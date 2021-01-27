@@ -52,6 +52,7 @@ class handler {
     }
 
     setPrefix (prefix) {
+        if (typeof prefix !== 'string') throw new Error('Prefix must be a string');
         this.prefix = prefix;
         return this
     }
