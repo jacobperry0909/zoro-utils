@@ -65,20 +65,20 @@
         .setOwners(['owner', 'ids'])
 
 - commands/ping.js
-        module.exports = {
-            name: 'ping',
-            aliases: ['p', 'pi'],
-            reqArgs: 0,
-            usage: 'none',
-            nsfw: false,
-            ownerOnly: false,
-            execute({ message, args, handler, client }) {
-                message.channel.send('pong');
+            module.exports = {
+                name: 'ping',
+                aliases: ['p', 'pi'],
+                reqArgs: 0,
+                usage: 'none',
+                nsfw: false,
+                ownerOnly: false,
+                execute({ message, args, handler, client }) {
+                    message.channel.send('pong');
+                }
             }
-        }
 
 - events/ready.js
-        module.exports = (client, handler) => {
-            console.log(\`Logged in as ${client.user.tag}`)
-        }
+            module.exports = (client, handler) => {
+                console.log(\`Logged in as ${client.user.tag}`)
+            }
 
