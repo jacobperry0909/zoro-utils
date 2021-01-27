@@ -7,7 +7,7 @@
 
 main file
 ```js
-const zoroUtils = require('../src/index');
+const zoroUtils = require('zoro-utils');
 const discordJS = require('discord.js');
 const client = new discordJS.Client();
 
