@@ -29,8 +29,6 @@ class handler {
             console.warn('Zoro utils >> no events directory specified')
         }
 
-        if (!token) throw new Error ('Must provide bot token');
-
         if (typeof commandTable === 'undefined') {
             commandTable = true;
         } else {
@@ -39,7 +37,6 @@ class handler {
             };
         }
 
-        if (typeof token !== 'string') throw new Error ('bot token must be a string');
 
         if (module && require.main) {
             const { path } = require.main;
@@ -48,7 +45,6 @@ class handler {
                 await commandhandler(path_1.join(path, commands || this.commandsDir), this, commandTable);
                 await eventHandler.eventhandler(path_1.join(path, events || this.eventsDir), this.client, this)
                 await eventHandler.loaddefaults('../defaults/', this.client, this)
-                await client.login(token);
             })();
         }
 

@@ -3,9 +3,6 @@
 
 ## Handler
 
-### Required options
-- token
-
 ### optionals
 - commands
 - events
@@ -24,8 +21,6 @@
     - relative path
 - events
     - relative path
-- token
-    - String
 - commandTable
     - Boolean
 
@@ -34,8 +29,6 @@
     - relative path to commands folder
 - events
     - relative path to events folder
-- token
-    - bot token, can be found [here](https://discord.com/developers)
 - commandTable
     - whether or not i should log loaded commands in a table. Recommened for use with a termial with emoji support
 
@@ -64,6 +57,8 @@
         })
         .setPrefix(';')
         .setOwners(['owner', 'ids'])
+
+        client.login('super_secret_token')
 
 - commands/ping.js
 
