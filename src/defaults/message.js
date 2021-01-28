@@ -51,16 +51,25 @@ module.exports = (client, handler, message) => {
         }
     }
 
+    if (command.reqRole) {
+        
+        const role = message.guild.roles.cache.find(role => role.name === command.reqRole);
+
+        if (!role) throw new Error(`${command.reqRole} dosnt exist in ${message.guild.name}`);
+
+        if (!message.member.roles.cache.has(role.id)) return message.channel.send('You do not have permission to run this command');
+    }
+
     try {
-        const perms = {
+        const params = {
             message,
             args,
             client,
             handler
         }
-        command.execute(perms);
+        command.execute(params);
     } catch (err) {
         console.log(err);
-        message.channel.send(`An error occured when running the command: ${commandName}. If this continues happening consider contacting the bot developer`);
+        message.channel.send(`An error occured when running the command: ${command.name}. If this continues happening consider contacting the bot developer`);
     }
 }

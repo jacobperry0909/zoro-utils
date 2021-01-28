@@ -84,6 +84,11 @@ nsfw - if command should only work in nsfw channels - Boolean
 
 ownerOnly - if command should only let owners use command - Boolean
 
+botPerms - list of required permissions for the bot to run the command - Array
+
+userPerms - list of required permissions for the user to run the command - Array
+
+reqRole - certain role needed for a user to run a command. must be a role name - String
 
 you can add some if you would like, for a help command you may want a description as well.
 
@@ -99,6 +104,9 @@ module.exports = {
     usage: 'example',
     nsfw: false,
     ownerOnly: false,
+    userPerms: ['ADMINISTRATOR', 'more', 'more'],
+    botPerms: ['ADMINISTRATOR'],
+    reqRole: 'role name',
     execute({ message, args, handler, client }) {
         message.channel.send('pong');
     }
@@ -109,7 +117,7 @@ module.exports = {
 
 all events export a function.
 
-name of file is the name of the function
+name of file is the name of the event
 
 all default events can be over rided by making an event with the same name as the default event
 
