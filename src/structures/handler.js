@@ -14,6 +14,8 @@ class handler {
         this.commands = new discordJS.Collection();
         this.events = new discordJS.Collection();
         this.owners = [];
+        this.cooldowns = new discordJS.Collection();
+        this.defaultCooldown = 3;
 
         if (!client) {
             throw new Error('Zoro utils >> No Discord.js Client instance passed in')
@@ -58,7 +60,16 @@ class handler {
     }
 
     setOwners (owners) {
-        this.owners = owners;
+        let Owners;
+        if (!owners) Owners = [];
+        else Owners = owners; 
+        this.owners = Owners;
+        return this;
+    }
+
+    setDefaultCooldown (cooldown) {
+        if (typeof cooldown !== 'number') throw new Error('default cooldown must be a number');
+        this.defaultCooldown = cooldown;
         return this;
     }
 

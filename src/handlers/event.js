@@ -5,7 +5,8 @@ const path = require('path');
 
 const eventHandler = (dir, client, handler) => {
     if (!fs.existsSync(dir)) return;
-    return glob(`${dir}**/*.js`).then(events => {
+    console.log(dir);
+    return glob(`${dir}/**/*.js`).then(events => {
         for (const eventFile of events) {
             delete require.cache[eventFile];
             const { name } = path.parse(eventFile);

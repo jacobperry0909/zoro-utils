@@ -1,3 +1,6 @@
+const Discord = require('discord.js');
+const prettyMs = require('pretty-ms');
+
 module.exports = (client, handler, message) => {
     const { prefix, owners, commands } = handler;
 
@@ -40,7 +43,7 @@ module.exports = (client, handler, message) => {
 
     if (command.userPerms) {
         const missing = [];
-        for (const perm in command.botPerms) {
+        for (const perm in command.userPerms) {
             if (!message.member.hasPermission(perm)) {
                 missing.push(perm);
             }
@@ -59,6 +62,29 @@ module.exports = (client, handler, message) => {
 
         if (!message.member.roles.cache.has(role.id)) return message.channel.send('You do not have permission to run this command');
     }
+
+    const cooldowns = handler.cooldowns;
+
+    if (!cooldowns.has(command.name)) {
+        cooldowns.set(command.name, new Discord.Collection());
+    }
+    
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || handler.defaultCooldown) * 1000;
+    
+    if (timestamps.has(message.author.id)) {
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            const exactTime = timeLeft.toFixed(0);
+            return message.reply(`please wait ${prettyMs(parseInt(exactTime) * 1000,  {verbose: true})} before reusing the \`${command.name}\` command.`);
+        }    
+    }
+
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
         const params = {

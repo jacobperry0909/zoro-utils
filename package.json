@@ -1,12 +1,13 @@
 {
   "name": "zoro-utils",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "discord.js utilities, command handler, event handler",
   "main": "src/index.js",
   "dependencies": {
     "colors": "^1.4.0",
     "discord.js": "^12.5.1",
-    "glob": "^7.1.6"
+    "glob": "^7.1.6",
+    "pretty-ms": "^7.0.1"
   },
   "devDependencies": {},
   "scripts": {

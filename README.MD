@@ -45,6 +45,13 @@ sets the bots owners
 
 default: []
 
+setDefaultCooldown(cooldownNumber)
+
+set the default command cooldown aka rate limit
+
+cooldown is in seconds
+
+default: 3
 
 ## commands
 
@@ -100,6 +107,7 @@ commands/pings.js
 module.exports = {
     name: 'ping',
     aliases: ['p'],
+    cooldown: 10, // seconds
     reqArgs: 0,
     usage: 'example',
     nsfw: false,
