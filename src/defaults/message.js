@@ -28,39 +28,30 @@ module.exports = (client, handler, message) => {
 
     if (command.nsfw && !message.guild.nsfw) return message.channel.send('this command only works in a nsfw channel');
 
-    if (command.botPerms) {
-        const missing = [];
-        for (const perm in command.botPerms) {
-            if (!message.guild.me.hasPermission(perm)) {
-                missing.push(perm);
-            }
+    if (message.guild) {
+        if (command.userPerms) {
+            const missing = message.channel.permissionsFor(message.member).missing(command.userPerms);
+			if (missing.length) {
+				return message.reply(`You are missing ${missing.map(perm => `\`${perm.toLowerCase().replace('_', ' ')}\``).join(', ')} permissions, you need them to run this command.`);
+			}
         }
 
-        if (missing.length) {
-            return message.channel.send(`I am missing the required permissions ${missing.map(perm => `\`${perm}\``).join(', ')}, to run this command`);
-        }
-    }
-
-    if (command.userPerms) {
-        const missing = [];
-        for (const perm in command.userPerms) {
-            if (!message.member.hasPermission(perm)) {
-                missing.push(perm);
-            }
-        }
-
-        if (missing.length) {
-            return message.channel.send(`You are missing the required permissions ${missing.map(perm => `\`${perm}\``).join(', ')}, to run this command`);
+        if (command.botPerms) {
+            const missing = message.channel.permissionsFor(message.guild.me).missing(command.botPerms);
+			if (missing.length) {
+				return message.reply(`I am missing ${missing.map(perm => `\`${perm.toLowerCase().replace('_', ' ')}\``).join(', ')} permissions, I need them to run this command.`);
+			}
         }
     }
 
     if (command.reqRole) {
-        
-        const role = message.guild.roles.cache.find(role => role.name === command.reqRole);
+        if (message.guild) {
+            const role = message.guild.roles.cache.find(role => role.name === command.reqRole);
 
-        if (!role) throw new Error(`${command.reqRole} dosnt exist in ${message.guild.name}`);
-
-        if (!message.member.roles.cache.has(role.id)) return message.channel.send('You do not have permission to run this command');
+            if (!role) throw new Error(`${command.reqRole} dosnt exist in ${message.guild.name}`);
+    
+            if (!message.member.roles.cache.has(role.id)) return message.channel.send('You do not have permission to run this command');
+        }
     }
 
     const cooldowns = handler.cooldowns;
