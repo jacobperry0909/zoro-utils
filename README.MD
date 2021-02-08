@@ -1,4 +1,5 @@
 # zoro-utils
+
 > npm install zoro-utils
 
 ## handler
@@ -6,18 +7,19 @@
 ### example
 
 main file
+
 ```js
 const zoroUtils = require('zoro-utils');
 const discordJS = require('discord.js');
 const client = new discordJS.Client();
 
 new zoroUtils.handler(client, {
-    commands: './commands',
-    events: './events',
-    commandTable: false
+	commands: './commands',
+	events: './events',
+	commandTable: false,
 })
-.setPrefix(";")
-.setOwners([])
+	.setPrefix(';')
+	.setOwners([]);
 
 client.login('super_secret_token');
 ```
@@ -33,9 +35,10 @@ events - relative path to events folder - String
 commandTable - whether or not you want a table to print with commands - Boolean
 
 ### methods
+
 setPrefix(prefixString)
 
-sets the bot prefix 
+sets the bot prefix
 
 default: !
 
@@ -70,6 +73,7 @@ handler - handler instance
 client - client instance
 
 ### folder structure
+
 commands can be in as many subfolders as you would like, or not in a subfolder at all
 
 for example
@@ -79,6 +83,7 @@ commands/general/dir/dir2/dir3/ping.js would still work
 and so would commands/ping.js
 
 ### properties
+
 name - name of command - String
 
 aliases - array of names the command can be run from - Array
@@ -105,20 +110,20 @@ commands/pings.js
 
 ```js
 module.exports = {
-    name: 'ping',
-    aliases: ['p'],
-    cooldown: 10, // seconds
-    reqArgs: 0,
-    usage: 'example',
-    nsfw: false,
-    ownerOnly: false,
-    userPerms: ['ADMINISTRATOR', 'more', 'more'],
-    botPerms: ['ADMINISTRATOR'],
-    reqRole: 'role name',
-    execute({ message, args, handler, client }) {
-        message.channel.send('pong');
-    }
-}
+	name: 'ping',
+	aliases: ['p'],
+	cooldown: 10, // seconds
+	reqArgs: 0,
+	usage: 'example',
+	nsfw: false,
+	ownerOnly: false,
+	userPerms: ['ADMINISTRATOR', 'more', 'more'],
+	botPerms: ['ADMINISTRATOR'],
+	reqRole: 'role name',
+	execute({ message, args, handler, client }) {
+		message.channel.send('pong');
+	},
+};
 ```
 
 ## events
@@ -147,44 +152,74 @@ events/ready.js
 
 ```js
 module.exports = (client, handler) => {
-    console.log(`Logged in as ${client.user.tag}`)
-}
+	console.log(`Logged in as ${client.user.tag}`);
+};
 ```
 
 events/message.js
 
 ```js
 module.exports = (client, handler, message) => {
-    console.log('I seen that');
-} 
+	console.log('I seen that');
+};
 ```
+
+## Features
+
+features can be in as many subfolders as you would like. Or not in any.
+
+for example
+
+features/dir/dir2/dir3/message.js would work
+and so would features/message.js
+
+features should export a function with 2 paramaters.
+paramaters are client and handler
+
+for example
+
+features/test.js
+
+```js
+module.exports = (client, handler) => {
+	client.on('message', (message) => {
+		console.log(message.content);
+	});
+
+	client.on('ready', () => {
+		console.log('ready');
+	});
+};
+```
+
+You can have as many features as you would like in the same file, or in different files.
 
 ## utils
 
 to use utils inside of commands use handler.utils.function
 
 for example
+
 ```js
 module.exports = {
-    name: 'formatNumber',
-    execute({ message, args, handler}) {
-        const num = parseInt(args[0]);
-        const formattedNum = handler.utils.formatNumber(num);
+	name: 'formatNumber',
+	execute({ message, args, handler }) {
+		const num = parseInt(args[0]);
+		const formattedNum = handler.utils.formatNumber(num);
 
-        message.channel.send(formattedNum);
-    }
-}
+		message.channel.send(formattedNum);
+	},
+};
 ```
 
 formatNumber(Number)
 if a number is not passed in returns NaN
 if number is passed in, returns number with commas in correct place
 
-___
+---
 
 comparePerms(member, target)
 
 member and target, both need to be 2 differnt member objects
 
 returns if the target has higher roles in the hierarchy or not
-
