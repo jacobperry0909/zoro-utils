@@ -4,10 +4,9 @@
 	"description": "discord.js utilities, command handler, event handler",
 	"main": "src/index.js",
 	"dependencies": {
-		"colors": "^2.4.3",
+		"colors": "^1.4.0",
 		"discord.js": "^12.5.1",
 		"glob": "^7.1.6",
-		"hkutilities": "^3.0.2",
 		"pretty-ms": "^7.0.1"
 	},
 	"devDependencies": {},
