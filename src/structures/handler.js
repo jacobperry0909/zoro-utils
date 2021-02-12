@@ -4,8 +4,20 @@ const eventHandler = require('../handlers/event');
 const featureHandler = require('../handlers/features');
 const path_1 = require('path');
 const utils = require('../utils/utils');
+const { type } = require('os');
+const { dirname } = require('path');
+const { FILE } = require('dns');
 
 class handler {
+	/**
+	 *
+	 * @constructor
+	 *
+	 * @property {dir} options.commands
+	 * @property {dir} options.events
+	 * @property {boolean} options.commandTable
+	 */
+
 	constructor(client, options = {}) {
 		this.client = client;
 		this.utils = utils;
@@ -76,6 +88,10 @@ class handler {
 		}
 	}
 
+	/**
+	 *
+	 * @param {String} prefix
+	 */
 	setPrefix(prefix) {
 		if (typeof prefix !== 'string')
 			throw new Error('Prefix must be a string');
@@ -83,6 +99,10 @@ class handler {
 		return this;
 	}
 
+	/**
+	 *
+	 * @param {Array<String>} owners
+	 */
 	setOwners(owners) {
 		let Owners;
 		if (!owners) Owners = [];
@@ -91,6 +111,10 @@ class handler {
 		return this;
 	}
 
+	/**
+	 *
+	 * @param {Number} cooldown
+	 */
 	setDefaultCooldown(cooldown) {
 		if (typeof cooldown !== 'number')
 			throw new Error('default cooldown must be a number');

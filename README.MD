@@ -120,6 +120,14 @@ module.exports = {
 	userPerms: ['ADMINISTRATOR', 'more', 'more'],
 	botPerms: ['ADMINISTRATOR'],
 	reqRole: 'role name',
+	init(client, handler) {
+		console.log('This function runs when the command loads');
+		/*
+		This is useful for things like caching
+		or just more logging.
+		This is optional
+		*/
+	},
 	execute({ message, args, handler, client }) {
 		message.channel.send('pong');
 	},
